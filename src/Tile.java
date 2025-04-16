@@ -1,12 +1,17 @@
-import edu.macalester.graphics.Rectangle;
+import edu.macalester.graphics.Point;
 
-public class Tile extends Rectangle{
+public class Tile{
+    private int number;
+    private Point tile;
 
-    public Tile(double x, double y, double width, double height) {
-        super(x, y, width, height);
-        //TODO Auto-generated constructor stub
+    public Tile(double x, double y) {
+        number = 2;
+        tile = new Point(x, y);
     }
 
+    public void move() {
+        
+    }
 
 
 }
