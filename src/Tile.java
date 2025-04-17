@@ -16,4 +16,8 @@ public class Tile {
     public int getNumber() {
         return number;
     }
+
+    public Rectangle getTile() {
+        return tile;
+    }
 }
