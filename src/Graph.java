@@ -1,25 +1,23 @@
-import edu.macalester.graphics.Point;
-
 public class Graph {
-    private Point[][] matrix;
+    private Tile[][] matrix;
 
     public Graph(int num) {
-        matrix = new Point[num][num];
+        matrix = new Tile[num][num];
     }
 
-    private void addHelper(Point point, int X, int Y) {
+    private void addHelper(Tile tile, int X, int Y) {
         for (int y = 0; y < matrix.length; y++) {
             if (y == Y - 1) {
                 for (int x = 0; x < matrix[y].length; x++) {
                     if (x == X - 1) {
-                        matrix[y][x] = point;
+                        matrix[y][x] = tile;
                     }
                 }
             }
         }
     }
     
-    public void add(Point point, int X, int Y) {
-        addHelper(point, X, Y);
+    public void add(Tile tile, int X, int Y) {
+        addHelper(tile, X, Y);
     }
 }
