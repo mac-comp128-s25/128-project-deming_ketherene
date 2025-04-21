@@ -20,8 +20,4 @@ public class Graph {
     public void create(Tile tile, int X, int Y) {
         createHelper(tile, X, Y);
     }
-
-    public void add() {
-        
-    }
 }
