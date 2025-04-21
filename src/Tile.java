@@ -1,12 +1,12 @@
-import edu.macalester.graphics.Rectangle;
+import edu.macalester.graphics.Point;
 
 public class Tile {
     private int number;
-    private Rectangle tile;
+    private Point tile;
 
     public Tile(double x, double y) {
         number = 2;
-        tile = new Rectangle(x, y, 100, 100);
+        tile = new Point(x, y);
     }
 
     public void add(int num) {
@@ -17,7 +17,7 @@ public class Tile {
         return number;
     }
 
-    public Rectangle getTile() {
+    public Point getTile() {
         return tile;
     }
 }
