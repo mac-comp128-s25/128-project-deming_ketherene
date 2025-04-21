@@ -9,9 +9,9 @@ public class Graph {
 
     private void addHelper(Point point, int X, int Y) {
         for (int y = 0; y < matrix.length; y++) {
-            if (y == Y) {
+            if (y == Y - 1) {
                 for (int x = 0; x < matrix[y].length; x++) {
-                    if (x == X) {
+                    if (x == X - 1) {
                         matrix[y][x] = point;
                     }
                 }
