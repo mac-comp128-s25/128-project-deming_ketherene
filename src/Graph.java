@@ -18,6 +18,8 @@ public class Graph {
             }
         }
     }
+
+    
     
     public void add(Point point, int X, int Y) {
         addHelper(point, X, Y);
