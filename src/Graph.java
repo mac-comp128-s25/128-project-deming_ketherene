@@ -5,7 +5,7 @@ public class Graph {
         matrix = new Tile[num][num];
     }
 
-    private void addHelper(Tile tile, int X, int Y) {
+    private void createHelper(Tile tile, int X, int Y) {
         for (int y = 0; y < matrix.length; y++) {
             if (y == Y - 1) {
                 for (int x = 0; x < matrix[y].length; x++) {
@@ -17,7 +17,11 @@ public class Graph {
         }
     }
 
-    public void add(Tile tile, int X, int Y) {
-        addHelper(tile, X, Y);
+    public void create(Tile tile, int X, int Y) {
+        createHelper(tile, X, Y);
+    }
+
+    public void add() {
+        
     }
 }
