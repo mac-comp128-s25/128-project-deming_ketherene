@@ -1,4 +1,3 @@
-
 import edu.macalester.graphics.CanvasWindow;
 
 public class Game2048 {
