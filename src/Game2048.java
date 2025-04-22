@@ -7,8 +7,6 @@ public class Game2048 {
     public Game2048() {
         this.canvas = new CanvasWindow("2048", 500, 500);
         this.graph = new Graph(4);
-        
-
     }
 
     
