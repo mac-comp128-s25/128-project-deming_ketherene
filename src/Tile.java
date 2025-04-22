@@ -2,11 +2,11 @@ import edu.macalester.graphics.Point;
 
 public class Tile {
     private int number;
-    private Point tile;
+    private Point tilePoint;
 
     public Tile(double x, double y) {
         number = 2;
-        tile = new Point(x, y);
+        tilePoint = new Point(x, y);
     }
 
     public void add(int num) {
@@ -17,7 +17,7 @@ public class Tile {
         return number;
     }
 
-    public Point getTile() {
-        return tile;
+    public Point getPoint() {
+        return tilePoint;
     }
 }

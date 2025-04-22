@@ -20,4 +20,15 @@ public class Graph {
     public void create(Tile tile, int X, int Y) {
         createHelper(tile, X, Y);
     }
+
+    public boolean hasTile(int x, int y) {
+        if (matrix[y][x] == null) {
+            return false;
+        }
+        return true;
+    }
+
+    public Tile getTile(int x, int y) {
+        return matrix[y][x];
+    }
 }
