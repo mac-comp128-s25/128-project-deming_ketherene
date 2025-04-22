@@ -17,7 +17,7 @@ public class Tile {
         return number;
     }
 
-    public Point getPoint() {
+    public Point getTilePoint() {
         return tilePoint;
     }
 }
