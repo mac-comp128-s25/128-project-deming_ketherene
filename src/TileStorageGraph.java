@@ -1,7 +1,7 @@
-public class Graph {
+public class TileStorageGraph {
     private Tile[][] matrix;
 
-    public Graph(int num) {
+    public TileStorageGraph(int num) {
         matrix = new Tile[num][num];
     }
 
@@ -31,5 +31,9 @@ public class Graph {
 
     public Tile getTile(int x, int y) {
         return matrix[y][x];
+    }
+
+    public Tile[][] getMatrix() {
+        return matrix;
     }
 }

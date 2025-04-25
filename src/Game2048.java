@@ -6,29 +6,29 @@ import edu.macalester.graphics.CanvasWindow;
 
 public class Game2048 {
     private CanvasWindow canvas;
-    private Graph graph;
+    private TileStorageGraph graph;
     private Random random;
 
     public Game2048() {
         canvas = new CanvasWindow("2048", 500, 500);
-        graph = new Graph(4);
+        graph = new TileStorageGraph(4);
         random = new Random();
     }
 
     public void newTile() {
-        int n = 1;
-        int m = 1;
-        List<Storage> storeList = new ArrayList<Storage>();
-        while (!graph.hasTile(n, m)) {
-            Storage store = new Storage(n, m);
-            storeList.add(store);
-            n++;
-            if (n == 4) {
-                m++;
-                n = 1;
+        List<HelperStorage> storeList = new ArrayList<HelperStorage>();
+        Tile[][] tileMatrix = graph.getMatrix();
+        
+        for (int y = 0; y < tileMatrix.length; y++) {
+            for (int x = 0; x < tileMatrix[y].length; x++) {
+                if (!graph.hasTile(x, y)) {
+                    storeList.add(new HelperStorage(x, y));
+                }
             }
         }
-        Storage target = storeList.get(random.nextInt(storeList.size()));
+        
+        HelperStorage target = storeList.get(random.nextInt(storeList.size()));
+        graph.create(target.getX(), target.getY());
     }
 
     public static void main(String[] args) {
