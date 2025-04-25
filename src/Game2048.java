@@ -16,18 +16,18 @@ public class Game2048 {
     }
 
     public void newTile() {
-        List<HelperStorage> storeList = new ArrayList<HelperStorage>();
+        List<MatrixCoordinateStorage> storeList = new ArrayList<MatrixCoordinateStorage>();
         Tile[][] tileMatrix = graph.getMatrix();
         
         for (int y = 0; y < tileMatrix.length; y++) {
             for (int x = 0; x < tileMatrix[y].length; x++) {
                 if (!graph.hasTile(x, y)) {
-                    storeList.add(new HelperStorage(x, y));
+                    storeList.add(new MatrixCoordinateStorage(x, y));
                 }
             }
         }
         
-        HelperStorage target = storeList.get(random.nextInt(storeList.size()));
+        MatrixCoordinateStorage target = storeList.get(random.nextInt(storeList.size()));
         graph.create(target.getX(), target.getY());
     }
 

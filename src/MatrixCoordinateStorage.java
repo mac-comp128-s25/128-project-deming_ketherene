@@ -1,8 +1,8 @@
-public class HelperStorage {
+public class MatrixCoordinateStorage {
     private int x;
     private int y;
     
-    public HelperStorage(int x, int y) {
+    public MatrixCoordinateStorage(int x, int y) {
         this.x = x;
         this.y = y;
     }
