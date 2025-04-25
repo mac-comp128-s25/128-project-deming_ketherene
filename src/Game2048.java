@@ -31,6 +31,10 @@ public class Game2048 {
         graph.create(target.getX(), target.getY());
     }
 
+    public void run() {
+        
+    }
+
     public static void main(String[] args) {
         new Game2048();
     }
