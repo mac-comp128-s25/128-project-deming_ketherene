@@ -3,11 +3,13 @@ import java.util.List;
 import java.util.Random;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.events.Key;
 
 public class Game2048 {
     private CanvasWindow canvas;
     private TileStorageGraph graph;
     private Random random;
+    private Operations operations;
 
     public Game2048() {
         canvas = new CanvasWindow("2048", 500, 500);
@@ -27,12 +29,38 @@ public class Game2048 {
             }
         }
         
-        MatrixCoordinateStorage target = storeList.get(random.nextInt(storeList.size()));
-        graph.create(target.getX(), target.getY());
+        if (!storeList.isEmpty()) {
+            MatrixCoordinateStorage target = storeList.get(random.nextInt(storeList.size()));
+            graph.create(target.getX(), target.getY());
+        }
+        
     }
 
     public void run() {
-        
+        canvas.onKeyDown(event -> {
+            Key key = event.getKey();
+            switch (key) {
+                case LEFT_ARROW -> {
+                    operations.moveLeft(graph.getMatrix());
+                    newTile();
+                }
+
+                case RIGHT_ARROW -> {
+                    operations.moveRight(graph.getMatrix());
+                    newTile();
+                }
+
+                case UP_ARROW -> {
+                    operations.moveUp(graph.getMatrix());
+                    newTile();
+                }
+
+                case DOWN_ARROW -> {
+                    operations.moveDown(graph.getMatrix());
+                    newTile();
+                }
+            }
+        });
     }
 
     public static void main(String[] args) {
