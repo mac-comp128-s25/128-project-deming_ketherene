@@ -1,3 +1,5 @@
+import edu.macalester.graphics.CanvasWindow;
+
 public class TileStorageGraph {
     private Tile[][] matrix;
     private int num;
@@ -7,12 +9,12 @@ public class TileStorageGraph {
         matrix = new Tile[num][num];
     }
 
-    private void createHelper(int X, int Y) {
+    private void createHelper(int X, int Y, CanvasWindow canvas) {
         for (int y = 0; y < matrix.length; y++) {
             if (y == Y) {
                 for (int x = 0; x < matrix[y].length; x++) {
                     if (x == X) {
-                        Tile tile = new Tile((X+1)*50, (Y+1)*50);
+                        Tile tile = new Tile((X+1)*50, (Y+1)*50, canvas);
                         matrix[y][x] = tile;
                     }
                 }
@@ -20,8 +22,8 @@ public class TileStorageGraph {
         }
     }
 
-    public void create(int X, int Y) {
-        createHelper(X, Y);
+    public void create(int X, int Y, CanvasWindow canvas) {
+        createHelper(X, Y, canvas);
     }
 
     public boolean hasTile(int x, int y) {

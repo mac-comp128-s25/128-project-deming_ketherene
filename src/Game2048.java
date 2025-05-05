@@ -3,7 +3,6 @@ import java.util.List;
 import java.util.Random;
 
 import edu.macalester.graphics.CanvasWindow;
-import edu.macalester.graphics.events.Key;
 
 public class Game2048 {
     private CanvasWindow canvas;
@@ -33,7 +32,7 @@ public class Game2048 {
         
         if (!storeList.isEmpty()) {
             MatrixCoordinateStorage target = storeList.get(random.nextInt(storeList.size()));
-            graph.create(target.getX(), target.getY());
+            graph.create(target.getX(), target.getY(), canvas);
         }
         
     }

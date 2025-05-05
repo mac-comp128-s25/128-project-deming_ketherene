@@ -1,5 +1,7 @@
 
 import java.awt.*;
+
+import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.Rectangle;
 
@@ -8,11 +10,14 @@ public class Tile {
     private Rectangle rectangle;
     private GraphicsText label;
 
-    public Tile(double x, double y) {
+    public Tile(double x, double y, CanvasWindow canvas) {
         number = 2;
         rectangle = new Rectangle(x, y, 100, 100);
         rectangle.setFillColor(Color.ORANGE);
         label = new GraphicsText(Integer.toString(number), x + 35, y + 35);
+
+        canvas.add(rectangle);
+        canvas.add(label);
     }
 
     public void add(int num) {
@@ -24,7 +29,7 @@ public class Tile {
         return number;
     }
 
-    public Rectangle getTilePoint() {
+    public Rectangle getTileRectangle() {
         return rectangle;
     }
 
