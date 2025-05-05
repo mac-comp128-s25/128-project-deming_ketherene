@@ -15,6 +15,7 @@ public class Game2048 {
         canvas = new CanvasWindow("2048", 500, 500);
         graph = new TileStorageGraph(4);
         random = new Random();
+        operations = new Operations();
         run();
     }
 
@@ -39,8 +40,7 @@ public class Game2048 {
 
     public void run() {
         canvas.onKeyDown(event -> {
-            Key key = event.getKey();
-            switch (key) {
+            switch (event.getKey()) {
                 case LEFT_ARROW -> {
                     operations.moveLeft(graph.getMatrix());
                     newTile();
@@ -62,6 +62,8 @@ public class Game2048 {
                 }
             }
         });
+        newTile();
+        newTile();
     }
 
     public static void main(String[] args) {

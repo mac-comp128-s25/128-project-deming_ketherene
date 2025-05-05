@@ -11,6 +11,8 @@ public class Operations {
                 matrix[y][x] = x < row.size() ? row.get(x) : null;
             }
         }
+
+        updateTilePositions(matrix);
     }
 
     public void moveRight(Tile[][] matrix) {
@@ -23,6 +25,8 @@ public class Operations {
                 matrix[y][x] = x < row.size() ? row.get(x) : null;
             }
         }
+
+        updateTilePositions(matrix);
     }
 
     public void moveUp(Tile[][] matrix) {
@@ -33,6 +37,8 @@ public class Operations {
                 matrix[y][x] = y < col.size() ? col.get(y) : null;
             }
         }
+
+        updateTilePositions(matrix);
     }
 
     public void moveDown(Tile[][] matrix) {
@@ -45,6 +51,8 @@ public class Operations {
                 matrix[y][x] = y < col.size() ? col.get(y) : null;
             }
         }
+
+        updateTilePositions(matrix);
     }
 
     private List<Tile> getRow(Tile[][] matrix, int rowIndex) {
@@ -78,4 +86,15 @@ public class Operations {
         }
         return result;
     }
+
+    private void updateTilePositions(Tile[][] matrix) {
+        for (int y = 0; y < matrix.length; y++) {
+            for (int x = 0; x < matrix[y].length; x++) {
+                if (matrix[y][x] != null) {
+                    matrix[y][x].moveTo((x + 1) * 50, (y + 1) * 50);
+                }
+            }
+        }
+    }
+    
 }

@@ -27,4 +27,10 @@ public class Tile {
     public Rectangle getTilePoint() {
         return rectangle;
     }
+
+    public void moveTo(double x, double y) {
+        rectangle.setPosition(x, y);
+        label.setPosition(x + 35, y + 35);
+    }    
+    
 }
