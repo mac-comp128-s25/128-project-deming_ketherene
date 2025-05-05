@@ -15,6 +15,7 @@ public class Game2048 {
         canvas = new CanvasWindow("2048", 500, 500);
         graph = new TileStorageGraph(4);
         random = new Random();
+        run();
     }
 
     public void newTile() {
@@ -63,8 +64,7 @@ public class Game2048 {
         });
     }
 
-    public void main(String[] args) {
+    public static void main(String[] args) {
         new Game2048();
-        run();
     }
 }
