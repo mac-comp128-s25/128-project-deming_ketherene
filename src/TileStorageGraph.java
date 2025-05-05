@@ -1,16 +1,18 @@
 public class TileStorageGraph {
     private Tile[][] matrix;
+    private int num;
 
     public TileStorageGraph(int num) {
+        this.num = num;
         matrix = new Tile[num][num];
     }
 
     private void createHelper(int X, int Y) {
         for (int y = 0; y < matrix.length; y++) {
-            if (y == Y - 1) {
+            if (y == Y) {
                 for (int x = 0; x < matrix[y].length; x++) {
-                    if (x == X - 1) {
-                        Tile tile = new Tile(X*50, Y*50);
+                    if (x == X) {
+                        Tile tile = new Tile((X+1)*50, (Y+1)*50);
                         matrix[y][x] = tile;
                     }
                 }
@@ -35,5 +37,9 @@ public class TileStorageGraph {
 
     public Tile[][] getMatrix() {
         return matrix;
+    }
+
+    public int getNum() {
+        return num;
     }
 }
