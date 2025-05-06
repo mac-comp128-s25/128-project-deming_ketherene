@@ -7,6 +7,11 @@ public class Operations {
     public void moveLeft(Tile[][] matrix) {
         for (int y = 0; y < matrix.length; y++) {
             List<Tile> row = compressAndMerge(getRow(matrix, y));
+
+            for (int x = 0; x < matrix[y].length; x++) {
+                matrix[y][x] = null;
+            }
+
             for (int x = 0; x < matrix[y].length; x++) {
                 matrix[y][x] = x < row.size() ? row.get(x) : null;
             }
@@ -22,6 +27,11 @@ public class Operations {
             row = compressAndMerge(row);
             Collections.reverse(row);
             int start = matrix[y].length - row.size();
+
+            for (int x = 0; x < matrix[y].length; x++) {
+                matrix[y][x] = null;
+            }
+
             for (int i = 0; i < row.size(); i++) {
                 matrix[y][start + i] = row.get(i);
             }
