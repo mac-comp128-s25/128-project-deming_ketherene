@@ -71,7 +71,7 @@ public class Game2048 {
         Button AiHelper = new Button("Auto Run");
 
         AiHelper.onClick(() -> {
-
+            new AiAutoHelper(graph, operations);
         });
 
         canvas.add(AiHelper);
