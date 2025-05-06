@@ -1,8 +1,8 @@
 public class FakeTile {
-    private Tile[][] matrix;
+    private Tile[][] fakeMatrix;
     
     public FakeTile(Tile[][] matrix) {
-        this.matrix = matrix;
+        fakeMatrix = matrix;
     }
 
     
