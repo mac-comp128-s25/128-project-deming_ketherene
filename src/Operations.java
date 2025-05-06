@@ -26,19 +26,20 @@ public class Operations {
             Collections.reverse(row);
             row = compressAndMerge(row);
             Collections.reverse(row);
-            int start = matrix[y].length - row.size();
-
+    
             for (int x = 0; x < matrix[y].length; x++) {
                 matrix[y][x] = null;
             }
-
+    
+            int start = matrix[y].length - row.size();
             for (int i = 0; i < row.size(); i++) {
                 matrix[y][start + i] = row.get(i);
             }
         }
-
+    
         updateTilePositions(matrix);
     }
+    
 
     public void moveUp(Tile[][] matrix) {
         for (int x = 0; x < matrix[0].length; x++) {
@@ -58,14 +59,20 @@ public class Operations {
             Collections.reverse(col);
             col = compressAndMerge(col);
             Collections.reverse(col);
-            int start = matrix.length - col.size();  // 下对齐的起点
+    
+            for (int y = 0; y < matrix.length; y++) {
+                matrix[y][x] = null;
+            }
+    
+            int start = matrix.length - col.size();
             for (int i = 0; i < col.size(); i++) {
                 matrix[start + i][x] = col.get(i);
             }
         }
-
+    
         updateTilePositions(matrix);
     }
+    
 
     private List<Tile> getRow(Tile[][] matrix, int rowIndex) {
         List<Tile> row = new ArrayList<>();
@@ -88,8 +95,13 @@ public class Operations {
         int i = 0;
         while (i < tiles.size()) {
             if (i + 1 < tiles.size() && tiles.get(i).getNumber() == tiles.get(i + 1).getNumber()) {
-                tiles.get(i).add(tiles.get(i + 1).getNumber());
-                result.add(tiles.get(i));
+                Tile merged = tiles.get(i);
+                Tile toRemove = tiles.get(i + 1);
+    
+                merged.add(toRemove.getNumber());
+                toRemove.removeFromCanvas();
+    
+                result.add(merged);
                 i += 2;
             } else {
                 result.add(tiles.get(i));
@@ -98,6 +110,7 @@ public class Operations {
         }
         return result;
     }
+    
 
     private void updateTilePositions(Tile[][] matrix) {
         for (int y = 0; y < matrix.length; y++) {
