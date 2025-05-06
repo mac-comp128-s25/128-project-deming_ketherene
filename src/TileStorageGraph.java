@@ -44,4 +44,28 @@ public class TileStorageGraph {
     public int getNum() {
         return num;
     }
+
+    public boolean isFull(){
+        for (int y = 0; y < matrix.length; y++) {
+            for(int x = 0; x < matrix[y].length; x++){
+                if (matrix[y][x] == null) {
+                    return false;
+                }
+            }
+        }
+        System.out.println("Graph full!!!");
+        return true;
+    }
+
+    public int openSpaces(){
+        int openSpaces = 0;
+        for (int y = 0; y < matrix.length; y++) {
+            for(int x = 0; x < matrix[y].length; x++){
+                if (matrix[y][x] == null) {
+                    openSpaces++;
+                }
+            }
+        }
+        return openSpaces;
+    }
 }
