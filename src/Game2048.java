@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Random;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.ui.Button;
 
 public class Game2048 {
     private CanvasWindow canvas;
@@ -15,34 +16,40 @@ public class Game2048 {
         graph = new TileStorageGraph(4);
         random = new Random();
         operations = new Operations();
-        canvas.onKeyDown(event -> {
-            switch (event.getKey()) {
-                case LEFT_ARROW -> {
-                    operations.moveLeft(graph.getMatrix());
-                    newTile();
-                }
-
-                case RIGHT_ARROW -> {
-                    operations.moveRight(graph.getMatrix());
-                    newTile();
-                }
-
-                case UP_ARROW -> {
-                    operations.moveUp(graph.getMatrix());
-                    newTile();
-                }
-
-                case DOWN_ARROW -> {
-                    operations.moveDown(graph.getMatrix());
-                    newTile();
-                }
-            }
-            winLose();
-
-        });
-
-        // run();
+        AiHelperButton();
+        run();
     }
+
+//     public void run() {
+// >>>>>>> ce8e9c6683c39cd131e24c7c627a2c245e1e9cf5
+//         canvas.onKeyDown(event -> {
+//             switch (event.getKey()) {
+//                 case LEFT_ARROW -> {
+//                     operations.moveLeft(graph.getMatrix());
+//                     newTile();
+//                 }
+
+//                 case RIGHT_ARROW -> {
+//                     operations.moveRight(graph.getMatrix());
+//                     newTile();
+//                 }
+
+//                 case UP_ARROW -> {
+//                     operations.moveUp(graph.getMatrix());
+//                     newTile();
+//                 }
+
+//                 case DOWN_ARROW -> {
+//                     operations.moveDown(graph.getMatrix());
+//                     newTile();
+//                 }
+//             }
+//             winLose();
+
+//         });
+
+//         // run();
+//     }
 
     public void newTile() {
         List<MatrixCoordinateStorage> storeList = new ArrayList<MatrixCoordinateStorage>();
@@ -117,6 +124,15 @@ public class Game2048 {
         canvas.removeAll();
         canvas.closeWindow();
         new Game2048();
+    }
+    public void AiHelperButton() {
+        Button AiHelper = new Button("Auto Run");
+
+        AiHelper.onClick(() -> {
+
+        });
+
+        canvas.add(AiHelper);
     }
 
     public static void main(String[] args) {
