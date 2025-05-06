@@ -2,12 +2,33 @@ public class AiAutoHelper {
     private TileStorageGraph graph;
     private Operations operations;
 
-    private static final String[] DIRECTIONS = {"LEFT", "RIGHT", "UP", "DOWN"};
-
     public AiAutoHelper(TileStorageGraph graph, Operations operations) {
         this.graph = graph;
         this.operations = operations;
     }
 
+    private Tile[][] testLeft() {
+        Tile[][] leftArray = graph.getMatrix();
+        operations.moveLeft(leftArray);
+        return leftArray;
+    }
+
+    private Tile[][] testRight() {
+        Tile[][] rightArray = graph.getMatrix();
+        operations.moveRight(rightArray);
+        return rightArray;
+    }
+
+    private Tile[][] tesUp() {
+        Tile[][] upArray = graph.getMatrix();
+        operations.moveUp(upArray);
+        return upArray;
+    }
+
+    private Tile[][] testDown() {
+        Tile[][] downArray = graph.getMatrix();
+        operations.moveDown(downArray);
+        return downArray;
+    }
     
 }
