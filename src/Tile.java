@@ -13,8 +13,12 @@ public class Tile {
     public Tile(double x, double y, CanvasWindow canvas) {
         number = 2;
         rectangle = new Rectangle(x, y, 100, 100);
-        rectangle.setFillColor(Color.ORANGE);
-        label = new GraphicsText(Integer.toString(number), x + 50, y + 50);
+        rectangle.setStrokeWidth(8);
+        rectangle.setStrokeColor(Color.WHITE);
+        changeColor();
+        label = new GraphicsText(Integer.toString(number), x + 25, y + 50);
+        label.setFillColor(Color.WHITE);
+        label.setFontSize(50);
 
         canvas.add(rectangle);
         canvas.add(label);
@@ -35,7 +39,48 @@ public class Tile {
 
     public void moveTo(double x, double y) {
         rectangle.setPosition(x, y);
-        label.setPosition(x + 50, y + 50);
+        label.setPosition(x + 25, y + 50);
     }    
+
+    public void changeColor(){
+        switch (number) {
+            case 2 -> {
+                rectangle.setFillColor(Color.LIGHT_GRAY);
+            }
+
+            case 4 -> {
+                rectangle.setFillColor(Color.GRAY);
+            }
+
+            case 8 -> {
+                rectangle.setFillColor(Color.DARK_GRAY);
+            }
+
+            case 16-> {
+                rectangle.setFillColor(Color.GREEN);
+            }
+            case 32-> {
+                rectangle.setFillColor(Color.CYAN);
+            }
+            case 64-> {
+                rectangle.setFillColor(Color.BLUE);
+            }
+            case 128-> {
+                rectangle.setFillColor(Color.PINK);
+            }
+            case 256-> {
+                rectangle.setFillColor(Color.MAGENTA);
+            }
+            case 512-> {
+                rectangle.setFillColor(Color.RED);
+            }
+            case 1024-> {
+                rectangle.setFillColor(Color.ORANGE);
+            }
+            case 2048-> {
+                rectangle.setFillColor(Color.YELLOW);
+            }
+        }
+    }
     
 }

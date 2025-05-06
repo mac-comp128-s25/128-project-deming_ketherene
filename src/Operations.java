@@ -104,9 +104,12 @@ public class Operations {
             for (int x = 0; x < matrix[y].length; x++) {
                 if (matrix[y][x] != null) {
                     matrix[y][x].moveTo((x + 1) * 100, (y + 1) * 100);
+                    matrix[y][x].changeColor();
                 }
             }
         }
     }
+
+    
     
 }
