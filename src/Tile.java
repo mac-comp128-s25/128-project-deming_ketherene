@@ -9,8 +9,10 @@ public class Tile {
     private int number;
     private Rectangle rectangle;
     private GraphicsText label;
+    private CanvasWindow canvas;
 
     public Tile(double x, double y, CanvasWindow canvas) {
+        this.canvas = canvas;
         number = 2;
         rectangle = new Rectangle(x, y, 100, 100);
         rectangle.setFillColor(Color.ORANGE);
@@ -36,6 +38,11 @@ public class Tile {
     public void moveTo(double x, double y) {
         rectangle.setPosition(x, y);
         label.setPosition(x + 50, y + 50);
-    }    
+    }
+
+    public void removeFromCanvas() {
+        canvas.remove(rectangle);
+        canvas.remove(label);
+    }
     
 }
