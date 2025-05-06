@@ -83,7 +83,6 @@ public class Tile {
                 rectangle.setFillColor(Color.YELLOW);
             }
         }
-        label.setPosition(x + 50, y + 50);
     }
 
     public void removeFromCanvas() {
