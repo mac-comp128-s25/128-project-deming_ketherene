@@ -21,8 +21,9 @@ public class Operations {
             Collections.reverse(row);
             row = compressAndMerge(row);
             Collections.reverse(row);
-            for (int x = 0; x < matrix[y].length; x++) {
-                matrix[y][x] = x < row.size() ? row.get(x) : null;
+            int start = matrix[y].length - row.size();
+            for (int i = 0; i < row.size(); i++) {
+                matrix[y][start + i] = row.get(i);
             }
         }
 
@@ -47,8 +48,9 @@ public class Operations {
             Collections.reverse(col);
             col = compressAndMerge(col);
             Collections.reverse(col);
-            for (int y = 0; y < matrix.length; y++) {
-                matrix[y][x] = y < col.size() ? col.get(y) : null;
+            int start = matrix.length - col.size();  // 下对齐的起点
+            for (int i = 0; i < col.size(); i++) {
+                matrix[start + i][x] = col.get(i);
             }
         }
 
@@ -91,7 +93,7 @@ public class Operations {
         for (int y = 0; y < matrix.length; y++) {
             for (int x = 0; x < matrix[y].length; x++) {
                 if (matrix[y][x] != null) {
-                    matrix[y][x].moveTo((x + 1) * 50, (y + 1) * 50);
+                    matrix[y][x].moveTo((x + 1) * 100, (y + 1) * 100);
                 }
             }
         }

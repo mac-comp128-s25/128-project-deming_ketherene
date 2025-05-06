@@ -11,7 +11,7 @@ public class Game2048 {
     private Operations operations;
 
     public Game2048() {
-        canvas = new CanvasWindow("2048", 500, 500);
+        canvas = new CanvasWindow("2048", 600, 600);
         graph = new TileStorageGraph(4);
         random = new Random();
         operations = new Operations();

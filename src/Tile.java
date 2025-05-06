@@ -14,7 +14,7 @@ public class Tile {
         number = 2;
         rectangle = new Rectangle(x, y, 100, 100);
         rectangle.setFillColor(Color.ORANGE);
-        label = new GraphicsText(Integer.toString(number), x + 35, y + 35);
+        label = new GraphicsText(Integer.toString(number), x + 50, y + 50);
 
         canvas.add(rectangle);
         canvas.add(label);
@@ -35,7 +35,7 @@ public class Tile {
 
     public void moveTo(double x, double y) {
         rectangle.setPosition(x, y);
-        label.setPosition(x + 35, y + 35);
+        label.setPosition(x + 50, y + 50);
     }    
     
 }

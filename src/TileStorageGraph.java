@@ -14,7 +14,7 @@ public class TileStorageGraph {
             if (y == Y) {
                 for (int x = 0; x < matrix[y].length; x++) {
                     if (x == X) {
-                        Tile tile = new Tile((X+1)*50, (Y+1)*50, canvas);
+                        Tile tile = new Tile((X+1)*100, (Y+1)*100, canvas);
                         matrix[y][x] = tile;
                     }
                 }
