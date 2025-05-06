@@ -3,6 +3,7 @@ import java.util.List;
 import java.util.Random;
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.ui.Button;
 
 public class Game2048 {
     private CanvasWindow canvas;
@@ -15,6 +16,7 @@ public class Game2048 {
         graph = new TileStorageGraph(4);
         random = new Random();
         operations = new Operations();
+        AiHelperButton();
         run();
     }
 
@@ -63,6 +65,16 @@ public class Game2048 {
         });
         newTile();
         newTile();
+    }
+
+    public void AiHelperButton() {
+        Button AiHelper = new Button("Auto Run");
+
+        AiHelper.onClick(() -> {
+
+        });
+
+        canvas.add(AiHelper);
     }
 
     public static void main(String[] args) {
