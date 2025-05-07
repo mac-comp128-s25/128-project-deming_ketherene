@@ -7,6 +7,26 @@ public class AiAutoHelper {
         this.operations = operations;
     }
 
+    private int scoreForEmpty(Tile[][] testArray) {
+        int scoreEmpty = 0;
+
+        for (Tile[] row : testArray) {
+            for (Tile tile : row) {
+                if (tile == null) {
+                    scoreEmpty ++;
+                }
+            }
+        }
+
+        return scoreEmpty;
+    }
+
+    private int scoreForCombination(Tile[][] testArray) {
+        int scoreCombination = 0;
+        return 0;
+
+    }
+
     private Tile[][] testLeft() {
         Tile[][] leftArray = graph.getMatrix();
         operations.moveLeft(leftArray);
