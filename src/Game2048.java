@@ -1,4 +1,5 @@
 import java.awt.Color;
+import java.awt.Font;
 import java.util.ArrayDeque;
 import java.util.ArrayList;
 import java.util.Deque;
@@ -9,6 +10,7 @@ import java.util.TimerTask;
 
 
 import edu.macalester.graphics.CanvasWindow;
+import edu.macalester.graphics.FontStyle;
 import edu.macalester.graphics.GraphicsText;
 import edu.macalester.graphics.ui.Button;
 
@@ -36,7 +38,7 @@ public class Game2048 {
         random = new Random();
         operations = new Operations();
         undoList = new ArrayDeque<>();
-        undoButton();
+        // undoButton();
         isRunning = false;
         autoTimer = new Timer();
         task = new TimerTask() {
@@ -103,24 +105,28 @@ public class Game2048 {
                         operations.moveLeft(graph.getMatrix());
                         newTile();
                         newTile();
+                        winLose();
                     }
 
                     case RIGHT_ARROW -> {
                         operations.moveRight(graph.getMatrix());
                         newTile();
                         newTile();
+                        winLose();
                     }
 
                     case UP_ARROW -> {
                         operations.moveUp(graph.getMatrix());
                         newTile();
                         newTile();
+                        winLose();
                     }
 
                     case DOWN_ARROW -> {
                         operations.moveDown(graph.getMatrix());
                         newTile();
                         newTile();
+                        winLose();
                     }
                 }
             });
@@ -129,68 +135,79 @@ public class Game2048 {
     }
 
     // private void winLose() {
-    //     if(graph.isFull() && !graph.canMerge()){
-    //         System.out.println("game is over");
-    //         gameOver("GAME OVER");
-    //     }
-    //     if (graph.is2048()) {
-    //         gameOver("You Win!!!");
-    //         System.out.println("You win");
-    //     }
+        // if(graph.isFull() && !graph.canMerge()){
+        //     System.out.println("game is over");
+        //     gameOver("GAME OVER");
+        // }
+        // if (graph.is2048()) {
+        //     gameOver("You Win!!!");
+        //     System.out.println("You win");
+        // }
         
     // }
 
-    // private void gameOver(String message){
-    //     canvas.pause(5000);
-    //     GraphicsText messageBanner = new GraphicsText(message);
-    //     messageBanner.setFontSize(50);
-    //     messageBanner.setFillColor(Color.RED);
-    //     canvas.add(messageBanner,200,300 );
-    //     // canvas.removeAll();
-    //     // canvas.closeWindow();
-    //     // new Game2048();
-    // }
+    private void gameOver(String message){
+        canvas.pause(5000);
+        GraphicsText messageBanner = new GraphicsText(message);
+        messageBanner.setFontSize(50);
+        messageBanner.setFillColor(Color.RED);
+        messageBanner.setFont(FontStyle.BOLD, 50);
+        messageBanner.setStrokeWidth(2);
+        messageBanner.setStrokeColor(Color.BLACK);
+        canvas.add(messageBanner,150,300 );
+        // canvas.removeAll();
+        // canvas.closeWindow();
+        // new Game2048();
+    }
 
 
     private boolean winLose(){
-
-        if(graph.isFull()){
-           if(graph.openSpaces() > 0){
-            
-                run();
-            
-            //System.out.println("open spaces: " + graph.openSpaces());
-            //if (graph.openSpaces() == 0){
-            //    System.out.println("hello");
-           }
-            
-        }
-        if(graph.isFull())
-            System.out.println("Graph is full");
-        if(graph.isFull() && !operations.canMerge) {
+        if(graph.isFull() && !graph.canMerge()){
             System.out.println("game is over");
-            gameOver();
-            return true;
+            gameOver("GAME OVER");
         }
+        if (graph.is2048()) {
+            gameOver("You Win!!!");
+            System.out.println("You win");
+        }
+
+        // if(graph.isFull()){
+        //    if(graph.openSpaces() > 0){
+            
+        //         run();
+            
+        //     //System.out.println("open spaces: " + graph.openSpaces());
+        //     //if (graph.openSpaces() == 0){
+        //     //    System.out.println("hello");
+        //    }
+            
+        // }
+        // if(graph.isFull())
+        //     System.out.println("Graph is full");
+        // if(graph.isFull() && !operations.canMerge) {
+        //     System.out.println("game is over");
+        //     gameOver();
+        //     return true;
+        // }
 
         return false;
 
     }
 
-    private void gameOver() {
-        canvas.onClick(event -> {
-            if (winLose()) {
-                canvas.removeAll();
-                canvas.closeWindow();
-            }
-        });
-    }
+    // private void gameOver() {
+    //     canvas.onClick(event -> {
+    //         if (winLose()) {
+    //             canvas.removeAll();
+    //             canvas.closeWindow();
+    //         }
+    //     });
+    // }
 
     public void AiHelperButton() {
         Button AiHelper = new Button("Play The Game For Me");
         Button AiHelperToo = new Button("Just One Step More");
-        AiHelper.setPosition(10, 10);
-        AiHelperToo.setPosition(10,50);
+        AiHelper.setPosition(325, 10);
+        AiHelperToo.setPosition(340,50);
         
         AiAutoHelper helper = new AiAutoHelper(graph);
 
