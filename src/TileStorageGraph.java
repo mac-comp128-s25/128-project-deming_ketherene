@@ -3,6 +3,7 @@ import edu.macalester.graphics.CanvasWindow;
 public class TileStorageGraph {
     private Tile[][] matrix;
     private int num;
+    public boolean canMerge = false;
 
     public TileStorageGraph(int num) {
         this.num = num;
@@ -31,6 +32,43 @@ public class TileStorageGraph {
             return false;
         }
         return true;
+    }
+
+    public void setMatrix(Tile[][] newMatrix){
+        System.out.println("Old matrix: " + matrix);
+        System.out.println("New matrix: " + newMatrix);
+        matrix = newMatrix.clone();
+        System.out.println("boolean:" + matrix.equals(newMatrix));
+        for (int y = 0; y < num; y++) {
+            for(int x = 0; x < num; x++){
+                if(matrix[y][x] != null ) {
+                System.out.println("First Line" + matrix[y][x].getNumber());
+            }
+            else{
+                System.out.println("First Line is null");
+            }
+            if(newMatrix[y][x] != null ) {
+                System.out.println("Second Line" + newMatrix[y][x].getNumber());
+            }
+            else{
+                System.out.println("Second Line is null");
+            }
+                if(newMatrix[y][x] != null){
+                    // matrix[y][x].setNum(newMatrix[y][x].getNumber());
+                    matrix[y][x] = newMatrix[y][x];
+                    matrix[y][x].updateTile();
+                }
+                else {
+                    matrix[y][x] = null;
+                }
+
+                // System.out.println("Print Line" + matrix[y][x]);
+                // if (matrix[y][x] != null) {
+                //     matrix[y][x].moveTo((x + 1) * 100, (y + 1) * 100);
+                //     matrix[y][x].changeColor();
+                // }
+            }
+        }
     }
 
     public Tile getTile(int x, int y) {
@@ -68,4 +106,37 @@ public class TileStorageGraph {
         }
         return openSpaces;
     }
+
+    public boolean is2048(){
+        for (int y = 0; y < matrix.length; y++) {
+            for(int x = 0; x < matrix[y].length; x++){
+                if(matrix[y][x] != null){
+                    if (matrix[y][x].getNumber() == 2048 ) {
+                        return true;
+                    }
+                }
+            }
+        }
+        return false;
+    }
+
+    public boolean canMerge(){
+        for (int y = 0; y < matrix.length; y++) {
+            for(int x = 0; x < matrix[y].length; x++){
+                Tile currentTile = matrix[y][x];
+                if (x > 0 && matrix[y][x-1].getNumber() == matrix[y][x].getNumber()
+                && matrix[y][x-1] != null) {
+                    return  true;
+                }
+                if((y < matrix[y].length-1 && matrix[y+1][x].getNumber() == matrix[y][x].getNumber()
+                && matrix[y+1][x] != null)){
+                    return true;
+                }
+
+            }
+        }
+        return false;
+    }
 }
+
+

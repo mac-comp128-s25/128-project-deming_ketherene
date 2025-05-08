@@ -20,7 +20,9 @@ public class Tile {
         changeColor();
         label = new GraphicsText(Integer.toString(number), x + 25, y + 50);
         label.setFillColor(Color.WHITE);
-        label.setFontSize(50);
+        label.setStrokeColor(Color.BLACK);
+        label.setStrokeWidth(1);
+        label.setFontSize(25);
 
         canvas.add(rectangle);
         canvas.add(label);
@@ -31,8 +33,25 @@ public class Tile {
         label.setText(Integer.toString(number));
     }
 
+    public double getX(){
+        return rectangle.getX();
+    }
+    public double getY(){
+        return rectangle.getY();
+    }
+
+
     public int getNumber() {
         return number;
+    }
+
+    public void setNum(int number) {
+        this.number = number;
+    }
+
+    public void updateTile(){
+        label.setText(Integer.toString(number));
+        changeColor();
     }
 
     public Rectangle getTileRectangle() {

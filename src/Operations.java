@@ -3,7 +3,7 @@ import java.util.Collections;
 import java.util.List;
 
 public class Operations {
-    public boolean canMerge = false;
+    
 
     public void moveLeft(Tile[][] matrix) {
         for (int y = 0; y < matrix.length; y++) {
@@ -96,7 +96,7 @@ public class Operations {
         int i = 0;
         while (i < tiles.size()) {
             if (i + 1 < tiles.size() && tiles.get(i).getNumber() == tiles.get(i + 1).getNumber()) {
-                canMerge = true;
+               
                 Tile merged = tiles.get(i);
                 Tile toRemove = tiles.get(i + 1);
     
@@ -110,12 +110,12 @@ public class Operations {
                 i++;
             }
         }
-        canMerge = false;
         return result;
     }
     
 
-    private void updateTilePositions(Tile[][] matrix) {
+
+    public void updateTilePositions(Tile[][] matrix) {
         for (int y = 0; y < matrix.length; y++) {
             for (int x = 0; x < matrix[y].length; x++) {
                 if (matrix[y][x] != null) {
@@ -125,7 +125,6 @@ public class Operations {
             }
         }
     }
-
 
     
 }
