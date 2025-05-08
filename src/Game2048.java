@@ -173,37 +173,36 @@ public class Game2048 {
             // newGameButton();
         }
 
-        // if(graph.isFull()){
-        //    if(graph.openSpaces() > 0){
+        if(graph.isFull()){
+           if(graph.openSpaces() > 0){
+                run();
             
-        //         run();
+            //System.out.println("open spaces: " + graph.openSpaces());
+            //if (graph.openSpaces() == 0){
+            //    System.out.println("hello");
+           }
             
-        //     //System.out.println("open spaces: " + graph.openSpaces());
-        //     //if (graph.openSpaces() == 0){
-        //     //    System.out.println("hello");
-        //    }
-            
-        // }
-        // if(graph.isFull())
-        //     System.out.println("Graph is full");
-        // if(graph.isFull() && !operations.canMerge) {
-        //     System.out.println("game is over");
-        //     gameOver();
-        //     return true;
-        // }
+        }
+        if(graph.isFull())
+            System.out.println("Graph is full");
+        if(graph.isFull() && !operations.canMerge) {
+            System.out.println("game is over");
+            gameOver();
+            return true;
+        }
 
         return false;
 
     }
 
-    // private void gameOver() {
-    //     canvas.onClick(event -> {
-    //         if (winLose()) {
-    //             canvas.removeAll();
-    //             canvas.closeWindow();
-    //         }
-    //     });
-    // }
+    private void gameOver() {
+        canvas.onClick(event -> {
+            if (winLose()) {
+                canvas.removeAll();
+                canvas.closeWindow();
+            }
+        });
+    }
 
     public void AiHelperButton() {
         Button AiHelper = new Button("Play The Game For Me");
@@ -229,7 +228,7 @@ public class Game2048 {
                         runAiOnce(helper);
                     }
                 };
-                autoTimer.schedule(task, 0, 300);
+                autoTimer.schedule(task, 0, 800);
                 isRunning = true;
             }
             
