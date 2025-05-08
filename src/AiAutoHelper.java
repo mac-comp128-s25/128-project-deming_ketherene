@@ -1,10 +1,32 @@
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+
 public class AiAutoHelper {
     private TileStorageGraph graph;
-    private Operations operations;
 
-    public AiAutoHelper(TileStorageGraph graph, Operations operations) {
+    public AiAutoHelper(TileStorageGraph graph) {
         this.graph = graph;
-        this.operations = operations;
+    }
+
+    public String theMovingDirection() {
+        int n = 0;
+        String result = "";
+        Map<String, Integer> storeNum = new HashMap<>();
+        storeNum.put("Left", testLeft());
+        storeNum.put("Right", testRight());
+        storeNum.put("Up", testUp());
+        storeNum.put("Down", testDown());
+        for (Map.Entry<String, Integer> entry : storeNum.entrySet()) {
+            String key = entry.getKey();
+            if (entry.getValue() > n) {
+                n = entry.getValue();
+                result = entry.getKey();
+            }
+        }
+
+        return result;
     }
 
     private int scoreForEmpty(Tile[][] testArray) {
@@ -18,37 +40,61 @@ public class AiAutoHelper {
             }
         }
 
-        return scoreEmpty;
+        return scoreEmpty * 5;
     }
 
-    private int scoreForCombination(Tile[][] testArray) {
-        int scoreCombination = 0;
-        return 0;
+    private int scoreForCombination(int num) {
+        return num * 5;
 
     }
 
-    private Tile[][] testLeft() {
+    private int scoreForHighestNumber(Tile[][] testArray) {
+        int num = 0;
+        for (Tile[] row : testArray) {
+            for (Tile tile : row) {
+                if (tile.getNumber() > num) {
+                    num = tile.getNumber();
+                }
+            }
+        }
+
+        return num * 10;
+    }
+
+    private int testLeft() {
         Tile[][] leftArray = graph.getMatrix();
-        operations.moveLeft(leftArray);
-        return leftArray;
+        Operations newOperations = new Operations();
+        newOperations.moveLeft(leftArray);
+        int mergeScore = newOperations.getMergeScore();
+        int score = scoreForEmpty(leftArray) + scoreForCombination(mergeScore) + scoreForHighestNumber(leftArray);
+        return score;
     }
 
-    private Tile[][] testRight() {
+    private int testRight() {
         Tile[][] rightArray = graph.getMatrix();
-        operations.moveRight(rightArray);
-        return rightArray;
+        Operations newOperations = new Operations();
+        newOperations.moveRight(rightArray);
+        int mergeScore = newOperations.getMergeScore();
+        int score = scoreForEmpty(rightArray) + scoreForCombination(mergeScore) + scoreForHighestNumber(rightArray);
+        return score;
     }
 
-    private Tile[][] tesUp() {
+    private int testUp() {
         Tile[][] upArray = graph.getMatrix();
-        operations.moveUp(upArray);
-        return upArray;
+        Operations newOperations = new Operations();
+        newOperations.moveUp(upArray);
+        int mergeScore = newOperations.getMergeScore();
+        int score = scoreForEmpty(upArray) + scoreForCombination(mergeScore) + scoreForHighestNumber(upArray);
+        return score;
     }
 
-    private Tile[][] testDown() {
+    private int testDown() {
         Tile[][] downArray = graph.getMatrix();
-        operations.moveDown(downArray);
-        return downArray;
+        Operations newOperations = new Operations();
+        newOperations.moveDown(downArray);
+        int mergeScore = newOperations.getMergeScore();
+        int score = scoreForEmpty(downArray) + scoreForCombination(mergeScore) + scoreForHighestNumber(downArray);
+        return score;
     }
     
 }

@@ -4,6 +4,7 @@ import java.util.List;
 
 public class Operations {
     public boolean canMerge = false;
+    private int mergeScore = 0;
 
     public void moveLeft(Tile[][] matrix) {
         for (int y = 0; y < matrix.length; y++) {
@@ -105,6 +106,8 @@ public class Operations {
     
                 result.add(merged);
                 i += 2;
+
+                mergeScore ++;
             } else {
                 result.add(tiles.get(i));
                 i++;
@@ -124,6 +127,10 @@ public class Operations {
                 }
             }
         }
+    }
+
+    public int getMergeScore() {
+        return mergeScore;
     }
 
 

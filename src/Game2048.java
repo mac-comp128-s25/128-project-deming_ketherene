@@ -125,11 +125,25 @@ public class Game2048 {
         canvas.closeWindow();
         new Game2048();
     }
+
     public void AiHelperButton() {
         Button AiHelper = new Button("Auto Run");
 
         AiHelper.onClick(() -> {
-            new AiAutoHelper(graph, operations);
+            AiAutoHelper helper = new AiAutoHelper(graph);
+            String direction = helper.theMovingDirection();
+            if (direction == "Left") {
+                operations.moveLeft(graph.getMatrix());
+            }
+            if (direction == "Right") {
+                operations.moveRight(graph.getMatrix());
+            }
+            if (direction == "Up") {
+                operations.moveUp(graph.getMatrix());
+            }
+            if (direction == "Down") {
+                operations.moveDown(graph.getMatrix());
+            }
         });
 
         canvas.add(AiHelper);
