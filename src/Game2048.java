@@ -4,6 +4,9 @@ import java.util.ArrayList;
 import java.util.Deque;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.GraphicsText;
@@ -16,6 +19,9 @@ public class Game2048 {
     private Operations operations;
     private ArrayDeque<Tile[][]> undoList;
     private Tile[][] previousScreen;
+    private boolean isRunning;
+    private Timer autoTimer;
+    private TimerTask task;
 
     public Game2048() {
         canvas = new CanvasWindow("2048", 600, 600);
@@ -31,6 +37,13 @@ public class Game2048 {
         operations = new Operations();
         undoList = new ArrayDeque<>();
         undoButton();
+        isRunning = false;
+        autoTimer = new Timer();
+        task = new TimerTask() {
+            public void run() {
+                // empty
+            }
+        };
         AiHelperButton();
         run();
     }
@@ -57,68 +70,189 @@ public class Game2048 {
     }
 
     public void run() {
-        canvas.onKeyDown(event -> {
-            switch (event.getKey()) {
-                case LEFT_ARROW -> {
-                    operations.moveLeft(graph.getMatrix());
-                    newTile();
-                    winLose();
-                }
+        // canvas.onKeyDown(event -> {
+        //     switch (event.getKey()) {
+        //         case LEFT_ARROW -> {
+        //             operations.moveLeft(graph.getMatrix());
+        //             newTile();
+        //             winLose();
+        //         }
 
-                case RIGHT_ARROW -> {
-                    operations.moveRight(graph.getMatrix());
-                    newTile();
-                    winLose();
-                }
+        //         case RIGHT_ARROW -> {
+        //             operations.moveRight(graph.getMatrix());
+        //             newTile();
+        //             winLose();
+        //         }
 
-                case UP_ARROW -> {
-                    operations.moveUp(graph.getMatrix());
-                    newTile();
-                    winLose();
-                }
+        //         case UP_ARROW -> {
+        //             operations.moveUp(graph.getMatrix());
+        //             newTile();
+        //             winLose();
+        //         }
 
-                case DOWN_ARROW -> {
-                    operations.moveDown(graph.getMatrix());
-                    newTile();
-                    winLose();
+        //         case DOWN_ARROW -> {
+        //             operations.moveDown(graph.getMatrix());
+        //             newTile();
+        //             winLose();
+        //         }
+        //     }
+        // });
+            canvas.onKeyDown(event -> {
+                switch (event.getKey()) {
+                    case LEFT_ARROW -> {
+                        operations.moveLeft(graph.getMatrix());
+                        newTile();
+                        newTile();
+                    }
+
+                    case RIGHT_ARROW -> {
+                        operations.moveRight(graph.getMatrix());
+                        newTile();
+                        newTile();
+                    }
+
+                    case UP_ARROW -> {
+                        operations.moveUp(graph.getMatrix());
+                        newTile();
+                        newTile();
+                    }
+
+                    case DOWN_ARROW -> {
+                        operations.moveDown(graph.getMatrix());
+                        newTile();
+                        newTile();
+                    }
                 }
+            });
+        newTile();
+        newTile();
+    }
+
+    // private void winLose() {
+    //     if(graph.isFull() && !graph.canMerge()){
+    //         System.out.println("game is over");
+    //         gameOver("GAME OVER");
+    //     }
+    //     if (graph.is2048()) {
+    //         gameOver("You Win!!!");
+    //         System.out.println("You win");
+    //     }
+        
+    // }
+
+    // private void gameOver(String message){
+    //     canvas.pause(5000);
+    //     GraphicsText messageBanner = new GraphicsText(message);
+    //     messageBanner.setFontSize(50);
+    //     messageBanner.setFillColor(Color.RED);
+    //     canvas.add(messageBanner,200,300 );
+    //     // canvas.removeAll();
+    //     // canvas.closeWindow();
+    //     // new Game2048();
+    // }
+
+
+    private boolean winLose(){
+
+        if(graph.isFull()){
+           if(graph.openSpaces() > 0){
+            
+                run();
+            
+            //System.out.println("open spaces: " + graph.openSpaces());
+            //if (graph.openSpaces() == 0){
+            //    System.out.println("hello");
+           }
+            
+        }
+        if(graph.isFull())
+            System.out.println("Graph is full");
+        if(graph.isFull() && !operations.canMerge) {
+            System.out.println("game is over");
+            gameOver();
+            return true;
+        }
+
+        return false;
+
+    }
+
+    private void gameOver() {
+        canvas.onClick(event -> {
+            if (winLose()) {
+                canvas.removeAll();
+                canvas.closeWindow();
             }
         });
-        newTile();
-        newTile();
     }
-
-    private void winLose() {
-        if(graph.isFull() && !graph.canMerge()){
-            System.out.println("game is over");
-            gameOver("GAME OVER");
-        }
-        if (graph.is2048()) {
-            gameOver("You Win!!!");
-            System.out.println("You win");
-        }
-        
-    }
-
-    private void gameOver(String message){
-        canvas.pause(5000);
-        GraphicsText messageBanner = new GraphicsText(message);
-        messageBanner.setFontSize(50);
-        messageBanner.setFillColor(Color.RED);
-        canvas.add(messageBanner,200,300 );
-        // canvas.removeAll();
-        // canvas.closeWindow();
-        // new Game2048();
-    }
-
 
     public void AiHelperButton() {
-        Button AiHelper = new Button("Auto Run");
+        Button AiHelper = new Button("Play The Game For Me");
+        Button AiHelperToo = new Button("Just One Step More");
+        AiHelper.setPosition(10, 10);
+        AiHelperToo.setPosition(10,50);
+        
+        AiAutoHelper helper = new AiAutoHelper(graph);
 
         AiHelper.onClick(() -> {
+            if (isRunning) {
+                autoTimer.cancel();
+                isRunning = false;
+            } else {
+                autoTimer = new Timer();
+                task = new TimerTask() {
+                    public void run() {
+                        if (winLose()) {
+                            autoTimer.cancel();
+                            return;
+                        }
+        
+                        runAiOnce(helper);
+                    }
+                };
+                autoTimer.schedule(task, 0, 300);
+                isRunning = true;
+            }
+            
+        });
 
+
+        AiHelperToo.onClick(() -> {  
+            if (winLose()) return;
+            
+            runAiOnce(helper);
         });
         canvas.add(AiHelper);
+        canvas.add(AiHelperToo);
+    }
+
+    private void runAiOnce(AiAutoHelper helper) {
+        String direction = helper.theMovingDirection();
+        if (direction == null) {
+            System.out.println("no path");
+            return;
+        }
+
+            doMove(direction);
+            winLose();
+    }
+
+    private void doMove(String direction) {
+        if (direction.equals("Left")) {
+            operations.moveLeft(graph.getMatrix());
+        }
+        if (direction.equals("Right")) {
+            operations.moveRight(graph.getMatrix());
+        }
+        if (direction.equals("Up")) {
+            operations.moveUp(graph.getMatrix());
+        }
+        if (direction.equals("Down")) {
+            operations.moveDown(graph.getMatrix());
+        }
+        
+        newTile();
+        newTile();
     }
 
     private void undoButton() {
