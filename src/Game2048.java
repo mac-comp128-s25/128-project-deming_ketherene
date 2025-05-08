@@ -1,6 +1,9 @@
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Random;
+import java.util.Timer;
+import java.util.TimerTask;
+
 
 import edu.macalester.graphics.CanvasWindow;
 import edu.macalester.graphics.ui.Button;
@@ -71,34 +74,34 @@ public class Game2048 {
     }
 
     public void run() {
-        // canvas.onKeyDown(event -> {
-        //     switch (event.getKey()) {
-        //         case LEFT_ARROW -> {
-        //             operations.moveLeft(graph.getMatrix());
-        //             newTile();
-        //         }
+            canvas.onKeyDown(event -> {
+                switch (event.getKey()) {
+                    case LEFT_ARROW -> {
+                        operations.moveLeft(graph.getMatrix());
+                        newTile();
+                    }
 
-        //         case RIGHT_ARROW -> {
-        //             operations.moveRight(graph.getMatrix());
-        //             newTile();
-        //         }
+                    case RIGHT_ARROW -> {
+                        operations.moveRight(graph.getMatrix());
+                        newTile();
+                    }
 
-        //         case UP_ARROW -> {
-        //             operations.moveUp(graph.getMatrix());
-        //             newTile();
-        //         }
+                    case UP_ARROW -> {
+                        operations.moveUp(graph.getMatrix());
+                        newTile();
+                    }
 
-        //         case DOWN_ARROW -> {
-        //             operations.moveDown(graph.getMatrix());
-        //             newTile();
-        //         }
-        //     }
-        // });
+                    case DOWN_ARROW -> {
+                        operations.moveDown(graph.getMatrix());
+                        newTile();
+                    }
+                }
+            });
         newTile();
         newTile();
     }
 
-    private void winLose(){
+    private boolean winLose(){
 
         if(graph.isFull()){
            if(graph.openSpaces() > 0){
@@ -116,37 +119,82 @@ public class Game2048 {
         if(graph.isFull() && !operations.canMerge) {
             System.out.println("game is over");
             gameOver();
+            return true;
         }
+
+        return false;
 
     }
 
-    private void gameOver(){
+    private boolean gameOver(){
         canvas.removeAll();
         canvas.closeWindow();
         new Game2048();
+        return true;
     }
 
     public void AiHelperButton() {
-        Button AiHelper = new Button("Auto Run");
+        Button AiHelper = new Button("Play The Game For Me");
+        Button AiHelperToo = new Button("Just One Step");
+        AiHelper.setPosition(10, 10);
+        AiHelperToo.setPosition(10,50);
+        
+        Timer autoTimer = new Timer();
+        AiAutoHelper helper = new AiAutoHelper(graph);
+
+        TimerTask task = new TimerTask() {
+            public void run() {
+                if (winLose()) {
+                    autoTimer.cancel();
+                    return;
+                }
+
+                runAiOnce(helper);
+            }
+        };
 
         AiHelper.onClick(() -> {
-            AiAutoHelper helper = new AiAutoHelper(graph);
-            String direction = helper.theMovingDirection();
-            if (direction == "Left") {
-                operations.moveLeft(graph.getMatrix());
-            }
-            if (direction == "Right") {
-                operations.moveRight(graph.getMatrix());
-            }
-            if (direction == "Up") {
-                operations.moveUp(graph.getMatrix());
-            }
-            if (direction == "Down") {
-                operations.moveDown(graph.getMatrix());
-            }
+            autoTimer.schedule(task, 0, 300);
+        });
+
+
+        AiHelperToo.onClick(() -> {  
+            if (winLose()) return;
+            
+            runAiOnce(helper);
         });
 
         canvas.add(AiHelper);
+        canvas.add(AiHelperToo);
+    }
+
+    private void runAiOnce(AiAutoHelper helper) {
+        String direction = helper.theMovingDirection();
+        if (direction == null) {
+            System.out.println("no path");
+            return;
+        }
+
+            doMove(direction);
+            winLose();
+    }
+
+    private void doMove(String direction) {
+        if (direction.equals("Left")) {
+            operations.moveLeft(graph.getMatrix());
+        }
+        if (direction.equals("Right")) {
+            operations.moveRight(graph.getMatrix());
+        }
+        if (direction.equals("Up")) {
+            operations.moveUp(graph.getMatrix());
+        }
+        if (direction.equals("Down")) {
+            operations.moveDown(graph.getMatrix());
+        }
+        
+        newTile();
+        newTile();
     }
 
     public static void main(String[] args) {

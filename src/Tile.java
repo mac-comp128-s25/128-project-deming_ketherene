@@ -14,6 +14,11 @@ public class Tile {
     public Tile(double x, double y, CanvasWindow canvas) {
         this.canvas = canvas;
         number = 2;
+        setUpGraphics(x, y);
+        
+    }
+
+    protected void setUpGraphics(double x, double y) {
         rectangle = new Rectangle(x, y, 100, 100);
         rectangle.setStrokeWidth(8);
         rectangle.setStrokeColor(Color.WHITE);

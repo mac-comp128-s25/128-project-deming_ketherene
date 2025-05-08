@@ -1,6 +1,4 @@
-import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class AiAutoHelper {
@@ -19,7 +17,6 @@ public class AiAutoHelper {
         storeNum.put("Up", testUp());
         storeNum.put("Down", testDown());
         for (Map.Entry<String, Integer> entry : storeNum.entrySet()) {
-            String key = entry.getKey();
             if (entry.getValue() > n) {
                 n = entry.getValue();
                 result = entry.getKey();
@@ -28,6 +25,20 @@ public class AiAutoHelper {
 
         return result;
     }
+    
+    private Tile[][] deepCopy(Tile[][] original) {
+        Tile[][] copy = new Tile[original.length][original[0].length];
+        for (int y = 0; y < original.length; y++) {
+            for (int x = 0; x < original[0].length; x++) {
+                if (original[y][x] != null) {
+                    int number = original[y][x].getNumber();
+                    copy[y][x] = new FakeTile(number);
+                }
+            }
+        }
+        return copy;
+    }
+    
 
     private int scoreForEmpty(Tile[][] testArray) {
         int scoreEmpty = 0;
@@ -52,7 +63,7 @@ public class AiAutoHelper {
         int num = 0;
         for (Tile[] row : testArray) {
             for (Tile tile : row) {
-                if (tile.getNumber() > num) {
+                if (tile != null && tile.getNumber() > num) {
                     num = tile.getNumber();
                 }
             }
@@ -62,7 +73,7 @@ public class AiAutoHelper {
     }
 
     private int testLeft() {
-        Tile[][] leftArray = graph.getMatrix();
+        Tile[][] leftArray = deepCopy(graph.getMatrix());
         Operations newOperations = new Operations();
         newOperations.moveLeft(leftArray);
         int mergeScore = newOperations.getMergeScore();
@@ -71,7 +82,7 @@ public class AiAutoHelper {
     }
 
     private int testRight() {
-        Tile[][] rightArray = graph.getMatrix();
+        Tile[][] rightArray = deepCopy(graph.getMatrix());
         Operations newOperations = new Operations();
         newOperations.moveRight(rightArray);
         int mergeScore = newOperations.getMergeScore();
@@ -80,7 +91,7 @@ public class AiAutoHelper {
     }
 
     private int testUp() {
-        Tile[][] upArray = graph.getMatrix();
+        Tile[][] upArray = deepCopy(graph.getMatrix());
         Operations newOperations = new Operations();
         newOperations.moveUp(upArray);
         int mergeScore = newOperations.getMergeScore();
@@ -89,7 +100,7 @@ public class AiAutoHelper {
     }
 
     private int testDown() {
-        Tile[][] downArray = graph.getMatrix();
+        Tile[][] downArray = deepCopy(graph.getMatrix());
         Operations newOperations = new Operations();
         newOperations.moveDown(downArray);
         int mergeScore = newOperations.getMergeScore();

@@ -7,6 +7,7 @@ public class Operations {
     private int mergeScore = 0;
 
     public void moveLeft(Tile[][] matrix) {
+        mergeScore = 0;
         for (int y = 0; y < matrix.length; y++) {
             List<Tile> row = compressAndMerge(getRow(matrix, y));
 
@@ -23,6 +24,7 @@ public class Operations {
     }
 
     public void moveRight(Tile[][] matrix) {
+        mergeScore = 0;
         for (int y = 0; y < matrix.length; y++) {
             List<Tile> row = getRow(matrix, y);
             Collections.reverse(row);
@@ -44,6 +46,7 @@ public class Operations {
     
 
     public void moveUp(Tile[][] matrix) {
+        mergeScore = 0;
         for (int x = 0; x < matrix[0].length; x++) {
             List<Tile> col = getColumn(matrix, x);
             col = compressAndMerge(col);
@@ -56,6 +59,7 @@ public class Operations {
     }
 
     public void moveDown(Tile[][] matrix) {
+        mergeScore = 0;
         for (int x = 0; x < matrix[0].length; x++) {
             List<Tile> col = getColumn(matrix, x);
             Collections.reverse(col);
