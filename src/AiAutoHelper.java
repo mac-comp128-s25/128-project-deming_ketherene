@@ -69,7 +69,7 @@ public class AiAutoHelper {
             }
         }
 
-        return num * 10;
+        return num * 20;
     }
 
     private int testLeft() {
