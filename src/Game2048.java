@@ -147,7 +147,7 @@ public class Game2048 {
     // }
 
     private void gameOver(String message){
-        canvas.pause(5000);
+        canvas.pause(3000);
         GraphicsText messageBanner = new GraphicsText(message);
         messageBanner.setFontSize(50);
         messageBanner.setFillColor(Color.RED);
@@ -165,10 +165,12 @@ public class Game2048 {
         if(graph.isFull() && !graph.canMerge()){
             System.out.println("game is over");
             gameOver("GAME OVER");
+            // newGameButton();
         }
         if (graph.is2048()) {
             gameOver("You Win!!!");
             System.out.println("You win");
+            // newGameButton();
         }
 
         // if(graph.isFull()){
@@ -283,6 +285,18 @@ public class Game2048 {
         });
         backButton.setPosition(20, 40);
         canvas.add(backButton);
+    }
+
+    private void newGameButton(){
+        Button newGame = new Button("New Game");
+        newGame.onClick(()->{
+            canvas.removeAll();
+            canvas.closeWindow();
+            new Game2048();
+        }
+        );
+        newGame.setPosition(150,350);
+        canvas.add(newGame);
     }
 
     public static void main(String[] args) {
