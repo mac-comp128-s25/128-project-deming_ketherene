@@ -130,11 +130,13 @@ public class Game2048 {
 
     }
 
-    private boolean gameOver(){
-        canvas.removeAll();
-        canvas.closeWindow();
-        new Game2048();
-        return true;
+    private void gameOver() {
+        canvas.onClick(event -> {
+            if (winLose()) {
+                canvas.removeAll();
+                canvas.closeWindow();
+            }
+        });
     }
 
     public void AiHelperButton() {
