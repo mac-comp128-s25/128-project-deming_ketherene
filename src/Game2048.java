@@ -79,20 +79,24 @@ public class Game2048 {
                     case LEFT_ARROW -> {
                         operations.moveLeft(graph.getMatrix());
                         newTile();
+                        newTile();
                     }
 
                     case RIGHT_ARROW -> {
                         operations.moveRight(graph.getMatrix());
+                        newTile();
                         newTile();
                     }
 
                     case UP_ARROW -> {
                         operations.moveUp(graph.getMatrix());
                         newTile();
+                        newTile();
                     }
 
                     case DOWN_ARROW -> {
                         operations.moveDown(graph.getMatrix());
+                        newTile();
                         newTile();
                     }
                 }
@@ -135,7 +139,7 @@ public class Game2048 {
 
     public void AiHelperButton() {
         Button AiHelper = new Button("Play The Game For Me");
-        Button AiHelperToo = new Button("Just One Step");
+        Button AiHelperToo = new Button("Just One Step More");
         AiHelper.setPosition(10, 10);
         AiHelperToo.setPosition(10,50);
         
