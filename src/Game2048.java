@@ -13,12 +13,22 @@ public class Game2048 {
     private TileStorageGraph graph;
     private Random random;
     private Operations operations;
+    private boolean isRunning;
+    private Timer autoTimer;
+    private TimerTask task;
 
     public Game2048() {
         canvas = new CanvasWindow("2048", 600, 600);
         graph = new TileStorageGraph(4);
         random = new Random();
         operations = new Operations();
+        isRunning = false;
+        autoTimer = new Timer();
+        task = new TimerTask() {
+            public void run() {
+                // empty
+            }
+        };
         AiHelperButton();
         run();
     }
@@ -145,22 +155,28 @@ public class Game2048 {
         AiHelper.setPosition(10, 10);
         AiHelperToo.setPosition(10,50);
         
-        Timer autoTimer = new Timer();
         AiAutoHelper helper = new AiAutoHelper(graph);
 
-        TimerTask task = new TimerTask() {
-            public void run() {
-                if (winLose()) {
-                    autoTimer.cancel();
-                    return;
-                }
-
-                runAiOnce(helper);
-            }
-        };
-
         AiHelper.onClick(() -> {
-            autoTimer.schedule(task, 0, 300);
+            if (isRunning) {
+                autoTimer.cancel();
+                isRunning = false;
+            } else {
+                autoTimer = new Timer();
+                task = new TimerTask() {
+                    public void run() {
+                        if (winLose()) {
+                            autoTimer.cancel();
+                            return;
+                        }
+        
+                        runAiOnce(helper);
+                    }
+                };
+                autoTimer.schedule(task, 0, 300);
+                isRunning = true;
+            }
+            
         });
 
 
