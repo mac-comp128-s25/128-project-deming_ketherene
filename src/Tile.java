@@ -106,6 +106,9 @@ public class Tile {
             case 2048-> {
                 rectangle.setFillColor(Color.YELLOW);
             }
+            default -> {
+                rectangle.setFillColor(Color.WHITE);
+            }
         }
     }
 

@@ -34,39 +34,22 @@ public class TileStorageGraph {
         return true;
     }
 
-    public void setMatrix(Tile[][] newMatrix){
-        System.out.println("Old matrix: " + matrix);
-        System.out.println("New matrix: " + newMatrix);
-        matrix = newMatrix.clone();
-        System.out.println("boolean:" + matrix.equals(newMatrix));
-        for (int y = 0; y < num; y++) {
-            for(int x = 0; x < num; x++){
-                if(matrix[y][x] != null ) {
-                System.out.println("First Line" + matrix[y][x].getNumber());
-            }
-            else{
-                System.out.println("First Line is null");
-            }
-            if(newMatrix[y][x] != null ) {
-                System.out.println("Second Line" + newMatrix[y][x].getNumber());
-            }
-            else{
-                System.out.println("Second Line is null");
-            }
+    public void setMatrix(Tile[][] newMatrix, CanvasWindow canvas){
+        for (int y = 0; y < newMatrix.length; y++) {
+            for (int x = 0; x < newMatrix[y].length; x++) {
                 if(newMatrix[y][x] != null){
-                    // matrix[y][x].setNum(newMatrix[y][x].getNumber());
-                    matrix[y][x] = newMatrix[y][x];
+                    matrix[y][x] = new Tile(newMatrix[y][x].getX(),newMatrix[y][x].getY(),canvas);                    matrix[y][x].getTileRectangle().setPosition(newMatrix[y][x].getX(),newMatrix[y][x].getY());
+                    matrix[y][x].setNum(newMatrix[y][x].getNumber());
+                    matrix[y][x].add(0);
                     matrix[y][x].updateTile();
-                }
-                else {
+                } 
+                else{
+                    if(matrix[y][x] != null){
+                    matrix[y][x].removeFromCanvas();
+                    }
                     matrix[y][x] = null;
-                }
 
-                // System.out.println("Print Line" + matrix[y][x]);
-                // if (matrix[y][x] != null) {
-                //     matrix[y][x].moveTo((x + 1) * 100, (y + 1) * 100);
-                //     matrix[y][x].changeColor();
-                // }
+                }
             }
         }
     }
@@ -91,7 +74,6 @@ public class TileStorageGraph {
                 }
             }
         }
-        System.out.println("Graph full!!!");
         return true;
     }
 

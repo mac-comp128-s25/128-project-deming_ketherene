@@ -38,7 +38,7 @@ public class Game2048 {
         random = new Random();
         operations = new Operations();
         undoList = new ArrayDeque<>();
-        // undoButton();
+        undoButton();
         isRunning = false;
         autoTimer = new Timer();
         task = new TimerTask() {
@@ -66,39 +66,33 @@ public class Game2048 {
             MatrixCoordinateStorage target = storeList.get(random.nextInt(storeList.size()));
             graph.create(target.getX(), target.getY(), canvas);
         }
-        Tile[][] matrixCopy = tileMatrix.clone();
-        undoList.push(matrixCopy);
-        System.out.println("Undo List:" + undoList);
+        undoList.push(copyHelper(tileMatrix));
+        // System.out.println("Undo List:" + undoList);
+    }
+
+    public Tile[][] copyHelper(Tile[][] matrix){
+        Tile[][] newMatrix = new Tile[matrix.length][matrix[0].length];
+        for (int y = 0; y < matrix.length; y++) {
+            for (int x = 0; x < matrix[y].length; x++) {
+                // System.out.println("hii!!!!!");
+                if(matrix[y][x] != null){
+                    newMatrix[y][x] = new Tile(matrix[y][x].getX(),matrix[y][x].getY(),canvas);
+                    // System.out.println("New Matrix:" + newMatrix[y][x].getNumber());
+                    newMatrix[y][x].getTileRectangle().setPosition(matrix[y][x].getX(),matrix[y][x].getY());
+                    newMatrix[y][x].setNum(matrix[y][x].getNumber());
+                    newMatrix[y][x].add(0);
+                    newMatrix[y][x].updateTile();
+                } 
+                else{
+                    // newMatrix[y][x].removeFromCanvas();
+                    newMatrix[y][x] = null;
+                }
+            }
+        }
+        return newMatrix;
     }
 
     public void run() {
-        // canvas.onKeyDown(event -> {
-        //     switch (event.getKey()) {
-        //         case LEFT_ARROW -> {
-        //             operations.moveLeft(graph.getMatrix());
-        //             newTile();
-        //             winLose();
-        //         }
-
-        //         case RIGHT_ARROW -> {
-        //             operations.moveRight(graph.getMatrix());
-        //             newTile();
-        //             winLose();
-        //         }
-
-        //         case UP_ARROW -> {
-        //             operations.moveUp(graph.getMatrix());
-        //             newTile();
-        //             winLose();
-        //         }
-
-        //         case DOWN_ARROW -> {
-        //             operations.moveDown(graph.getMatrix());
-        //             newTile();
-        //             winLose();
-        //         }
-        //     }
-        // });
             canvas.onKeyDown(event -> {
                 switch (event.getKey()) {
                     case LEFT_ARROW -> {
@@ -134,18 +128,6 @@ public class Game2048 {
         newTile();
     }
 
-    // private void winLose() {
-        // if(graph.isFull() && !graph.canMerge()){
-        //     System.out.println("game is over");
-        //     gameOver("GAME OVER");
-        // }
-        // if (graph.is2048()) {
-        //     gameOver("You Win!!!");
-        //     System.out.println("You win");
-        // }
-        
-    // }
-
     private void gameOver(String message){
         canvas.pause(3000);
         GraphicsText messageBanner = new GraphicsText(message);
@@ -155,9 +137,6 @@ public class Game2048 {
         messageBanner.setStrokeWidth(2);
         messageBanner.setStrokeColor(Color.BLACK);
         canvas.add(messageBanner,150,300 );
-        // canvas.removeAll();
-        // canvas.closeWindow();
-        // new Game2048();
     }
 
 
@@ -165,16 +144,15 @@ public class Game2048 {
         if(graph.isFull() && !graph.canMerge()){
             System.out.println("game is over");
             gameOver("GAME OVER");
-            // newGameButton();
+            newGameButton();
             return true;
         }
         if (graph.is2048()) {
             gameOver("You Win!!!");
             System.out.println("You win");
-            // newGameButton();
+            newGameButton();
             return true;
         }
-
         return false;
 
     }
@@ -255,7 +233,7 @@ public class Game2048 {
             // System.out.println("Current grapg" + graph.getMatrix());
             previousScreen = undoList.pop();
             // System.out.println("Popped"+ previousScreen);
-            graph.setMatrix(previousScreen);
+            graph.setMatrix(previousScreen,canvas);
         });
         backButton.setPosition(20, 40);
         canvas.add(backButton);
